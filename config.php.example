@@ -16,7 +16,8 @@ This file is part of the status project.
     along with the status project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-	$email = 'administrator@example.com';
+	$email = 'administrator@domain.tld'; // if you don't want emails, set: $email = NULL;
 	$port = 12908; 	
+	$solus_frequency = 3600; // how often to fetch bandwith data, in seconds
 	$db = '/srv/servers.example.com/servers.db';
 ?>

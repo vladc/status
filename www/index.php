@@ -48,6 +48,7 @@ This file is part of the status project.
 				<th scope="col">Uptime</th>
 				<th scope="col">RAM</th>
 				<th scope="col">Disk</th>
+				<th scope="col">BW</th>
 				<th scope="col">Load</th>
 			</tr>
 		</thead>
@@ -67,7 +68,7 @@ This file is part of the status project.
 	while ($row = $dbs->fetch(PDO::FETCH_ASSOC)) {
 		$i++;
 		if ($row['provider'] != $provider) {
-			echo '<tr><td colspan="8" style="text-align: left; vertical-align: middle; font-weight: bold; font-size: 10px; padding-left: 5px;">'. $row['provider'] .'</td></tr>';
+			echo '<tr><td colspan="9" style="text-align: left; vertical-align: middle; font-weight: bold; font-size: 10px; padding-left: 5px;">'. $row['provider'] .'</td></tr>';
 			$provider = $row['provider'];
 		}
 	   	if ($row['status'] == "0") {
@@ -82,13 +83,20 @@ This file is part of the status project.
 		echo '<td>'. $row['node'] .'</td>';
 		echo '<td>'. sec_human(time() - $row['time']) .'</td>';
 		echo '<td>'. $row['uptime'] .'</td>';
-		$mp = ($row['mused']-$row['mbuffers'])/$row['mtotal']*100;
+		$mp = round(($row['mused']-$row['mbuffers'])/$row['mtotal']*100, 2);
 		$used = $row['mused'] - $row['mbuffers'];
 		echo '<td class="5pad"><div class="progress-container"><div class="progress-container-percent" style="width:'. $mp .'%"><div class="bartext">'. $used .'/'. $row['mtotal'] .'MB</div></div></div></td>';
 		echo '<td class="5pad">';
-		if(isset($row['diskused'])) {
-			$mp = ($row['diskused']/$row['disktotal'])*100;
+		if(isset($row['disktotal'])) {
+			$mp = round(($row['diskused']/$row['disktotal'])*100, 2);
 			echo '<div class="progress-container"><div class="progress-container-percent" style="width:'. $mp .'%"><div class="bartext">'. format_kbytes($row['diskused']) .'/'. format_kbytes($row['disktotal']) .'GB</div></div></div>';
+		} else {
+			echo 'N/A';
+		}
+		echo '</td><td class="5pad">';
+		if(!empty($row['bwtotal'])) {
+			$mp = round(($row['bwused']/$row['bwtotal'])*100, 2);
+			echo '<div class="progress-container"><div class="progress-container-percent" style="width:'. $mp .'%"><div class="bartext">'. format_kbytes($row['bwused']) .'/'. format_kbytes($row['bwtotal']) .'GB</div></div></div>';
 		} else {
 			echo 'N/A';
 		}
