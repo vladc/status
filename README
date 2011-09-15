@@ -7,5 +7,15 @@ Requires:
   * SQLite3 PHP Module
   * scrd (or daemon with compatible output) - https://github.com/dimecadmium/scrd
 
+For SolusVM API integration:
+  DB fields must be filled like this:
+    solusvm_url = http(s)://solus.host.tld
+    solusvm_key = key 
+    solusvm_hash = hash
+    
+   Optionally, you can include the port (eg: http(s)://solus.host.tld:5656)
+   To activate the API, generate the key and hash, login to your SolusVM and check the API section.
+
+
 Please report any bugs or feature requests you may encounter.
   - If you do not have a github account feel free to contact me on IRC: irc.cedr.ca 6667/+6697 - #dev
